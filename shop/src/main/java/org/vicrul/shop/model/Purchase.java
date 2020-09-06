@@ -1,6 +1,7 @@
 package org.vicrul.shop.model;
 
-import java.sql.Date;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,10 +15,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Purchases")
+@Table(name = "purchases")
 @Data
 @NoArgsConstructor
-public class Purchases {
+public class Purchase {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +29,14 @@ public class Purchases {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
-	private Customers customer;
+	private Customer customer;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-	private Products product;
+	private Product product;
 
-	public Purchases(Date datePurchase, Customers customer, Products product) {
+	public Purchase(int id, Date datePurchase, Customer customer, Product product) {
+		this.id = id;
 		this.datePurchase = datePurchase;
 		this.customer = customer;
 		this.product = product;

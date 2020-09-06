@@ -3,9 +3,9 @@ package org.vicrul.shop.util;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.vicrul.shop.model.Customers;
-import org.vicrul.shop.model.Products;
-import org.vicrul.shop.model.Purchases;
+import org.vicrul.shop.model.Customer;
+import org.vicrul.shop.model.Product;
+import org.vicrul.shop.model.Purchase;
 
 public class HibernateSessionFactoryUtil {
 	private static SessionFactory sessionFactory;
@@ -16,9 +16,9 @@ public class HibernateSessionFactoryUtil {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration().configure();
-                configuration.addAnnotatedClass(Customers.class);
-                configuration.addAnnotatedClass(Products.class);
-                configuration.addAnnotatedClass(Purchases.class);
+                configuration.addAnnotatedClass(Customer.class);
+                configuration.addAnnotatedClass(Product.class);
+                configuration.addAnnotatedClass(Purchase.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 
