@@ -31,4 +31,14 @@ public class CustomerServiceImpl implements CustomerService{
 	public List<Customer> findPassiveCustomers(int count) {
 		return customerDao.findPassiveCustomers(count);
 	}
+
+	@Override
+	public void createView(String startDate, String endDate) {
+		customerDao.createView(startDate, endDate);
+	}
+
+	@Override
+	public void dropView() {
+		customerDao.dropView();
+	}
 }

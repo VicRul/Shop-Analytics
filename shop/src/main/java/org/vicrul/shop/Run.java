@@ -15,6 +15,8 @@ public class Run {
 		List<Customer> customers2 = customerService.findWhoBoughtThisProduct("Минералка", 0);
 		List<Customer> customers3 = customerService.intervalCost(100, 500);
 		List<Customer> customers4 = customerService.findPassiveCustomers(4);
+		//customerService.createView("2020-05-20", "2020-05-24");
+		//customerService.dropView();
 		
 		getList(customers1);
 		System.out.println("==============================================================");
