@@ -7,6 +7,7 @@
 * СУБД PostgreSQL
 * Lombok
 * JSON Simple
+* Maven
 ## Установка и развертывание
 Приложение можно скомпилировать в исполняемый `jar` файл с помощью команды Maven:
 `mvn clean package`.</br>
