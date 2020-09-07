@@ -16,15 +16,15 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public List<Customer> findBySurname(String surname) {
+	public List<Customer> findBySurname(String lastName) {
 		Session session = getCurrentSession();
 		List<Customer> customers;
 		try {
 			session.beginTransaction();
 			TypedQuery<Customer> query = session
-					.createQuery("select new Customer(surname, name) from Customer where surname =: surname",
+					.createQuery("select new Customer(lastName, firstName) from Customer where lastName =: lastName",
 							Customer.class)
-					.setParameter("surname", surname);
+					.setParameter("lastName", lastName);
 			customers = query.getResultList();
 			session.getTransaction().commit();
 		} finally {
@@ -34,18 +34,18 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public List<Customer> findWhoBoughtThisProduct(String type, long minTimes) {
+	public List<Customer> findWhoBoughtThisProduct(String productName, long minTimes) {
 		Session session = getCurrentSession();
 		List<Customer> customers;
 		try {
 			session.beginTransaction();
 			TypedQuery<Customer> query = session
 					.createQuery(
-							"select new Customer(c.surname, c.name)"
+							"select new Customer(c.lastName, c.firstName)"
 									+ " from Purchase pur inner join pur.customer c inner join pur.product prod"
-									+ " where prod.type = :type group by c having count(prod.id) >= :minTimes",
+									+ " where prod.productName = :productName group by c having count(prod.id) >= :minTimes",
 							Customer.class)
-					.setParameter("type", type).setParameter("minTimes", minTimes);
+					.setParameter("productName", productName).setParameter("minTimes", minTimes);
 			customers = query.getResultList();
 			session.getTransaction().commit();
 		} finally {
@@ -61,7 +61,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		try {
 			session.beginTransaction();
 			TypedQuery<Customer> query = session.createQuery(
-					"select new Customer(c.surname, c.name)"
+					"select new Customer(c.lastName, c.firstName)"
 							+ " from Purchase pur inner join pur.customer c inner join pur.product prod"
 							+ " group by c having sum(prod.price) >= :minPrice and sum(prod.price) <= :maxPrice",
 					Customer.class).setParameter("minPrice", minPrice).setParameter("maxPrice", maxPrice);
@@ -79,7 +79,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		List<Customer> customers;
 		try {
 			session.beginTransaction();
-			TypedQuery<Customer> query = session.createQuery("select new Customer(c.surname, c.name)"
+			TypedQuery<Customer> query = session.createQuery("select new Customer(c.lastName, c.firstName)"
 					+ " from Purchase pur inner join pur.customer c inner join pur.product prod"
 					+ " group by c order by count(prod.id)", Customer.class).setMaxResults(count);
 			customers = query.getResultList();
@@ -126,7 +126,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		try {
 			session.beginTransaction();
 			TypedQuery<Customer> query = session
-					.createQuery("select new Customer(surname, name) from PeriodData group by surname, name order by sum(price) DESC",
+					.createQuery("select new Customer(lastName, firstName) from PeriodData group by lastName, firstName order by sum(price) DESC",
 							Customer.class);
 			customers = query.getResultList();
 			session.getTransaction().commit();
@@ -137,15 +137,15 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public List<Product> getCustomerPurchses(String surname, String name) {
+	public List<Product> getCustomerPurchses(String lastName, String firstName) {
 		Session session = getCurrentSession();
 		List<Product> purchases;
 		try {
 			session.beginTransaction();
-			TypedQuery<Product> query = session.createQuery("select new Product(pd.type, (pd.price * count(pd.type)))"
+			TypedQuery<Product> query = session.createQuery("select new Product(pd.productName, (pd.price * count(pd.productName)))"
 						+ " from PeriodData pd"
-						+ " where pd.surname = :surname and pd.name = :name group by pd.type, pd.price", Product.class)
-						.setParameter("surname", surname).setParameter("name", name);
+						+ " where pd.lastName = :lastName and pd.firstName = :firstName group by pd.productName, pd.price", Product.class)
+						.setParameter("lastName", lastName).setParameter("firstName", firstName);
 			purchases = query.getResultList();
 			session.getTransaction().commit();
 		} finally {
@@ -161,7 +161,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		try {
 			session.beginTransaction();
 			TypedQuery<PeriodData> query = session
-					.createQuery("select new PeriodData(surname, name, type, price, datePurchase) from PeriodData",
+					.createQuery("select new PeriodData(lastName, firstName, productName, price, datePurchase) from PeriodData",
 							PeriodData.class);
 			allData = query.getResultList();
 			session.getTransaction().commit();

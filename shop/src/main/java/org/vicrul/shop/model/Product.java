@@ -24,8 +24,8 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column
-	private String type;
+	@Column (name = "type")
+	private String productName;
 	
 	@Column
 	private long price;
@@ -33,8 +33,8 @@ public class Product {
 	@OneToMany(mappedBy = "product")
 	private List<Purchase> purchases;
 
-	public Product(String type, long price) {
-		this.type = type;
+	public Product(String productName, long price) {
+		this.productName = productName;
 		this.price = price;
 		this.purchases = new ArrayList<Purchase>();
 	}

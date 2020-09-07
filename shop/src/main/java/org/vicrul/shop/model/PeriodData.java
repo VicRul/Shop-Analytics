@@ -19,14 +19,14 @@ public class PeriodData {
 	@Id
 	private int id;
 	
-	@Column
-	private String surname;
+	@Column (name = "surname")
+	private String lastName;
 
-	@Column
-	private String name;
+	@Column (name = "name")
+	private String firstName;
 
-	@Column
-	private String type;
+	@Column (name = "type")
+	private String productName;
 
 	@Column
 	private long price;
@@ -35,9 +35,9 @@ public class PeriodData {
 	private Date datePurchase;
 
 	public PeriodData(String surname, String name, String type, long price, Date datePurchase) {
-		this.surname = surname;
-		this.name = name;
-		this.type = type;
+		this.lastName = surname;
+		this.firstName = name;
+		this.productName = type;
 		this.price = price;
 		this.datePurchase = datePurchase;
 	}	

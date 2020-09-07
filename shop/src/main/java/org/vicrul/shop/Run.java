@@ -16,6 +16,12 @@ import org.vicrul.shop.service.CustomerServiceImpl;
 public class Run {
 
 	public static void main(String[] args) {
+		
+		String command = args[0];
+		String input = args[1];
+		String output = args[2];
+		
+		System.out.println(command + " " + input + " " + output);
 
 		CustomerService customerService = new CustomerServiceImpl();
 		List<Customer> customers1 = customerService.findBySurname("Иванов");

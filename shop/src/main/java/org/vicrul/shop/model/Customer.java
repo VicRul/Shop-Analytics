@@ -25,18 +25,18 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column
-	private String surname;
+	@Column(name = "surname")
+	private String lastName;
 	
-	@Column
-	private String name;
+	@Column(name = "name")
+	private String firstName;
 	
 	@OneToMany(mappedBy = "customer")
 	private List<Purchase> purchases;
 
 	public Customer(String surname, String name) {
-		this.surname = surname;
-		this.name = name;
+		this.lastName = surname;
+		this.firstName = name;
 		this.purchases = new ArrayList<Purchase>();
 	}
 }
