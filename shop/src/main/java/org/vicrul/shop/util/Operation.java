@@ -1,4 +1,4 @@
-package org.vicrul.shop;
+package org.vicrul.shop.util;
 
 import java.io.FileReader;
 import java.io.FileWriter;

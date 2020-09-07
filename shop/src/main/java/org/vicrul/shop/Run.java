@@ -1,17 +1,6 @@
 package org.vicrul.shop;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import org.vicrul.shop.model.Customer;
-import org.vicrul.shop.model.PeriodData;
-import org.vicrul.shop.model.Product;
-import org.vicrul.shop.service.CustomerService;
-import org.vicrul.shop.service.CustomerServiceImpl;
+import org.vicrul.shop.util.Operation;
 
 public class Run {
 
