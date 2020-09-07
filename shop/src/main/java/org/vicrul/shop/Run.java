@@ -13,7 +13,7 @@ public class Run {
 			outputFilePath = args[2];
 		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("Указаны не все входные параметры при запуске.\n "
-					+ "Необходимо ввести операцию [search или stat], файл с критериями [*.json], файл для записи [*.json]");
+					+ "Необходимо ввести операцию [search или stat], файл с критериями [*.json], файл для записи [*.json]..");
 		}
 
 		switch (inputCommand) {
