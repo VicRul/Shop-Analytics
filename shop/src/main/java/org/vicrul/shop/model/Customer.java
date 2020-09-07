@@ -34,8 +34,7 @@ public class Customer {
 	@OneToMany(mappedBy = "customer")
 	private List<Purchase> purchases;
 
-	public Customer(int id, String surname, String name) {
-		this.id = id;
+	public Customer(String surname, String name) {
 		this.surname = surname;
 		this.name = name;
 		this.purchases = new ArrayList<Purchase>();

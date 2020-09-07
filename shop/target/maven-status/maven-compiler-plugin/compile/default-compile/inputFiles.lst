@@ -1,0 +1,10 @@
+/home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/dao/CustomerDAO.java
+/home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/service/CustomerServiceImpl.java
+/home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/Run.java
+/home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/util/HibernateSessionFactoryUtil.java
+/home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/model/PeriodData.java
+/home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/model/Product.java
+/home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/model/Customer.java
+/home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/model/Purchase.java
+/home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/dao/CustomerDAOImpl.java
+/home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/service/CustomerService.java

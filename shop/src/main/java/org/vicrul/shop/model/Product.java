@@ -16,7 +16,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "products")
 @Data
-@ToString(exclude = "purchases")
+@ToString(exclude = {"id", "purchases"})
 @NoArgsConstructor
 public class Product {
 
@@ -28,13 +28,12 @@ public class Product {
 	private String type;
 	
 	@Column
-	private int price;
+	private long price;
 	
 	@OneToMany(mappedBy = "product")
 	private List<Purchase> purchases;
 
-	public Product(int id, String type, int price) {
-		this.id = id;
+	public Product(String type, long price) {
 		this.type = type;
 		this.price = price;
 		this.purchases = new ArrayList<Purchase>();

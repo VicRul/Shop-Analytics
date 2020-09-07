@@ -4,6 +4,8 @@ import java.util.List;
 import org.vicrul.shop.dao.CustomerDAO;
 import org.vicrul.shop.dao.CustomerDAOImpl;
 import org.vicrul.shop.model.Customer;
+import org.vicrul.shop.model.PeriodData;
+import org.vicrul.shop.model.Product;
 
 import lombok.NoArgsConstructor;
 
@@ -40,5 +42,20 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public void dropView() {
 		customerDao.dropView();
+	}
+
+	@Override
+	public List<Customer> getCustomersInPeriod() {
+		return customerDao.getCustomersInPeriod();
+	}
+
+	@Override
+	public List<Product> getCustomerPurchses(String surname, String name) {
+		return customerDao.getCustomerPurchses(surname, name);
+	}
+
+	@Override
+	public List<PeriodData> getAllData() {
+		return customerDao.getAllData();
 	}
 }

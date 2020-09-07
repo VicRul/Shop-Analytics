@@ -1,0 +1,10 @@
+org/vicrul/shop/dao/CustomerDAO.class
+org/vicrul/shop/service/CustomerService.class
+org/vicrul/shop/service/CustomerServiceImpl.class
+org/vicrul/shop/dao/CustomerDAOImpl.class
+org/vicrul/shop/model/Customer.class
+org/vicrul/shop/model/PeriodData.class
+org/vicrul/shop/model/Product.class
+org/vicrul/shop/Run.class
+org/vicrul/shop/model/Purchase.class
+org/vicrul/shop/util/HibernateSessionFactoryUtil.class
