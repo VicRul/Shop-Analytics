@@ -30,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public List<Customer> findPassiveCustomers(int count) {
+	public List<Customer> findPassiveCustomers(long count) {
 		return customerDao.findPassiveCustomers(count);
 	}
 

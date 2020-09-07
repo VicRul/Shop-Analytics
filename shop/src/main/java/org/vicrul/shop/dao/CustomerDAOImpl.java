@@ -74,14 +74,14 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public List<Customer> findPassiveCustomers(int count) {
+	public List<Customer> findPassiveCustomers(long count) {
 		Session session = getCurrentSession();
 		List<Customer> customers;
 		try {
 			session.beginTransaction();
 			TypedQuery<Customer> query = session.createQuery("select new Customer(c.lastName, c.firstName)"
 					+ " from Purchase pur inner join pur.customer c inner join pur.product prod"
-					+ " group by c order by count(prod.id)", Customer.class).setMaxResults(count);
+					+ " group by c order by count(prod.id)", Customer.class).setMaxResults((int)count);
 			customers = query.getResultList();
 			session.getTransaction().commit();
 		} finally {

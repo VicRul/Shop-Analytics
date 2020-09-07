@@ -10,7 +10,7 @@ public interface CustomerService {
 	List<Customer> findBySurname(String surname);
 	List<Customer> findWhoBoughtThisProduct(String title, long minTimes);
 	List<Customer> intervalCost(long minPrice, long maxPrice);
-	List<Customer> findPassiveCustomers(int count);
+	List<Customer> findPassiveCustomers(long count);
 	void createView(String startDate, String endDate);
 	void dropView();
 	List<Customer> getCustomersInPeriod();

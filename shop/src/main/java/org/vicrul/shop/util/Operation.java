@@ -30,19 +30,31 @@ public class Operation {
 		JSONArray creterias = (JSONArray) jsonObject.get("criterias");
 		Iterator element = creterias.iterator();
 		JSONObject result = new JSONObject();
+		JSONArray resultArray = new JSONArray();
 		result.put("type", "search");
-		
+
 		while (element.hasNext()) {
 			JSONObject innerObj = (JSONObject) element.next();
-			
-			if (innerObj.containsKey("surname")) {
-				String surname = (String) innerObj.get("surname");
-				if (surname.isEmpty()) {
+			JSONObject innerResult = new JSONObject();
+
+			if (innerObj.containsKey("lastName")) {
+				String lastName = (String) innerObj.get("lastName");
+				if (lastName.isEmpty()) {
 					errorOperation("Параметр 'lastName' должен быть пустым", outputFilePath);
 				} else {
-					List<Customer> customers = customerService.findBySurname(surname);
-					result.put("criteria", result.put("surname", surname));
-					result.put("results", customers);
+					List<Customer> customers = customerService.findBySurname(lastName);
+					JSONObject criteria = new JSONObject();
+					criteria.put("lastName", lastName.trim());
+					innerResult.put("criteria", criteria);
+					JSONArray customersArray = new JSONArray();
+
+					for (Customer customer : customers) {
+						JSONObject jsonCustomers = new JSONObject();
+						jsonCustomers.put("lastName", customer.getLastName().trim());
+						jsonCustomers.put("firstName", customer.getFirstName().trim());
+						customersArray.add(jsonCustomers);
+					}
+					innerResult.put("results", customersArray);
 				}
 			} else if (innerObj.containsKey("productName") && innerObj.containsKey("minTimes")) {
 				String productName = (String) innerObj.get("productName");
@@ -54,11 +66,19 @@ public class Operation {
 				} else {
 					List<Customer> customers = customerService.findWhoBoughtThisProduct(productName, minTimes);
 					JSONObject criteria = new JSONObject();
-					criteria.put("productName", productName);
+					criteria.put("productName", productName.trim());
 					criteria.put("minTimes", minTimes);
 
-					result.put("criteria", criteria);
-					result.put("result", customers);
+					innerResult.put("criteria", criteria);
+					JSONArray customersArray = new JSONArray();
+
+					for (Customer customer : customers) {
+						JSONObject jsonCustomers = new JSONObject();
+						jsonCustomers.put("lastName", customer.getLastName().trim());
+						jsonCustomers.put("firstName", customer.getFirstName().trim());
+						customersArray.add(jsonCustomers);
+					}
+					innerResult.put("results", customersArray);
 				}
 			} else if (innerObj.containsKey("minExpenses") && innerObj.containsKey("maxExpenses")) {
 
@@ -72,25 +92,45 @@ public class Operation {
 					JSONObject criteria = new JSONObject();
 					criteria.put("minExpenses", minExpenses);
 					criteria.put("maxExpenses", maxExpenses);
-					result.put("criteria", criteria);
-					result.put("result", customers);
+					innerResult.put("criteria", criteria);
+					JSONArray customersArray = new JSONArray();
+
+					for (Customer customer : customers) {
+						JSONObject jsonCustomers = new JSONObject();
+						jsonCustomers.put("lastName", customer.getLastName().trim());
+						jsonCustomers.put("firstName", customer.getFirstName().trim());
+						customersArray.add(jsonCustomers);
+					}
+					innerResult.put("results", customersArray);
 				}
 
 			} else if (innerObj.containsKey("badCustomers")) {
 
-				int badCustomers = (int) innerObj.get("badCustomers");
+				long badCustomers = (long) innerObj.get("badCustomers");
 				if (badCustomers <= 0) {
 					errorOperation("Параметр 'badCustomers' должен быть больше нуля", outputFilePath);
 				} else {
 					List<Customer> customers = customerService.findPassiveCustomers(badCustomers);
-					result.put("criteria", result.put("badCustomers", badCustomers));
-					result.put("results", customers);
+					JSONObject criteria = new JSONObject();
+					criteria.put("badCustomers", badCustomers);
+					innerResult.put("criteria", criteria);
+					JSONArray customersArray = new JSONArray();
+
+					for (Customer customer : customers) {
+						JSONObject jsonCustomers = new JSONObject();
+						jsonCustomers.put("lastName", customer.getLastName().trim());
+						jsonCustomers.put("firstName", customer.getFirstName().trim());
+						customersArray.add(jsonCustomers);
+					}
+					innerResult.put("results", customersArray);
 				}
 
 			} else {
 				errorOperation("Указан некорректный критерий для выполнения операции", outputFilePath);
 			}
+			resultArray.add(innerResult);
 		}
+		result.put("results", resultArray);
 		writeInFile(result, outputFilePath);
 	}
 
@@ -120,30 +160,36 @@ public class Operation {
 		List<Customer> customers = customerService.getCustomersInPeriod();
 		JSONArray customersArray = new JSONArray();
 
-		for (Customer customer : customers) {
+		for(Customer customer : customers) {
 			JSONObject jsonCustomers = new JSONObject();
-			jsonCustomers.put("name", customer.getLastName().concat(" ").concat(customer.getFirstName()));
-			List<Product> purchases = customerService.getCustomerPurchses(customer.getLastName(), customer.getFirstName());
-			jsonCustomers.put("purchases", purchases);
-			
+			JSONArray arrayPurchases = new JSONArray();
+			jsonCustomers.put("name", customer.getLastName().trim() + " " + customer.getFirstName().trim());
+			List<Product> purchases = customerService.getCustomerPurchses(customer.getLastName().trim(),
+					customer.getFirstName().trim());
 			int customerTotalExpenses = 0;
-			for (Product product : purchases) {
+			for(Product product : purchases) {
+				JSONObject jsonPurchases = new JSONObject();
+				jsonPurchases.put("name", product.getProductName().trim());
+				jsonPurchases.put("expenses", product.getPrice());
+				arrayPurchases.add(jsonPurchases);
 				customerTotalExpenses += product.getPrice();
 			}
+			jsonCustomers.put("purchases", arrayPurchases);
 			jsonCustomers.put("totalExpenses", customerTotalExpenses);
 			customersArray.add(jsonCustomers);
 		}
 		result.put("customers", customersArray);
-		
+
 		List<PeriodData> allData = customerService.getAllData();
 		int totalFullExpenses = 0;
 		for (PeriodData periodData : allData) {
 			totalFullExpenses += periodData.getPrice();
 		}
-		int avgExpenses = totalFullExpenses / allData.size();
+		double avgExpenses = totalFullExpenses / allData.size();
 		result.put("totalExpenses", totalFullExpenses);
 		result.put("avgExpenses", avgExpenses);
-		
+
+		customerService.dropView();
 		writeInFile(result, outputFilePath);
 	}
 

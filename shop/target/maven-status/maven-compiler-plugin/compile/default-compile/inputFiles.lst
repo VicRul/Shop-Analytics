@@ -8,3 +8,4 @@
 /home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/model/Purchase.java
 /home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/dao/CustomerDAOImpl.java
 /home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/service/CustomerService.java
+/home/victor/git/Shop-Analytics/shop/src/main/java/org/vicrul/shop/util/Operation.java
