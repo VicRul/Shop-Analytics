@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Built-By: victor
+Build-Jdk: 11.0.8
+Main-Class: org.vicrul.shop.Run
+Created-By: Maven Integration for Eclipse
+
